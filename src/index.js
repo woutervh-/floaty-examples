@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {Row, RowItem, ThemeProvider} from 'floaty';
+import {Row, RowItem, Stack, StackItem, ThemeProvider} from 'floaty';
 import base from 'floaty/lib/base';
 import theme from './theme';
 
@@ -40,16 +40,34 @@ class App extends React.Component {
     }
 
     render() {
-        return <div>
-            <ThemeProvider theme={base}>
-                <Row>
-                    <RowItem>
-                        <button onClick={this.handleAddClick.bind(this)}>Add one more</button>
-                    </RowItem>
-                    {this.renderRowItems()}
-                </Row>
-            </ThemeProvider>
-        </div>;
+        return <ThemeProvider theme={base}>
+            <Row style={{height: 200}}>
+                <RowItem>
+                    <button onClick={this.handleAddClick.bind(this)}>Add one more</button>
+                </RowItem>
+                {/*this.renderRowItems()*/}
+                <RowItem>
+                    <Stack>
+                        <StackItem title="a">
+                            Hello
+                        </StackItem>
+                        <StackItem title="b">
+                            world!
+                        </StackItem>
+                        <StackItem title="c" style={{display: 'flex'}}>
+                            <Row>
+                                <RowItem>
+                                    Foo
+                                </RowItem>
+                                <RowItem>
+                                    Bar
+                                </RowItem>
+                            </Row>
+                        </StackItem>
+                    </Stack>
+                </RowItem>
+            </Row>
+        </ThemeProvider>;
     }
 }
 
