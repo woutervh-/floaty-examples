@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {Row, RowItem, Stack, StackItem, ThemeProvider} from 'floaty';
+import {LayoutManager} from 'floaty/lib';
 import base from 'floaty/lib/base';
 import theme from './theme';
 
@@ -11,8 +11,53 @@ Object.keys(theme).forEach(key => {
 
 class App extends React.Component {
     state = {
-        amount: 0
+        amount: 0,
+        message: 'Click me'
     };
+
+    componentWillMount() {
+        this.layout = {
+            type: 'row',
+            props: {
+                style: {
+                    height: 200
+                }
+            }, items: [
+                {
+                    type: 'prop-ref',
+                    name: 'button'
+                }, {
+                    type: 'stack',
+                    items: [
+                        {
+                            title: 'a',
+                            content: 'Hello'
+                        }, {
+                            title: 'b',
+                            content: 'world!'
+                        }, {
+                            type: 'row',
+                            title: 'c',
+                            props: {
+                                style: {
+                                    display: 'flex'
+                                }
+                            },
+                            items: [
+                                {
+                                    content: 'Foo'
+                                }, {
+                                    content: 'Bar'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        this.layoutElement = LayoutManager(this.layout);
+    }
 
     handleAddClick() {
         this.setState({amount: this.state.amount + 1});
@@ -20,6 +65,12 @@ class App extends React.Component {
 
     handleRemoveClick() {
         this.setState({amount: this.state.amount - 1});
+    }
+
+    handleButtonClick() {
+        const list = ['Ouch', 'Bugger', 'Yikes', 'Get off me', 'Stop touching me'];
+        const message = list[Math.floor(Math.random() * list.length)];
+        this.setState({message});
     }
 
     renderRowItems() {
@@ -39,35 +90,13 @@ class App extends React.Component {
         return rowItems;
     }
 
+    renderButton() {
+        return <button onClick={this.handleButtonClick.bind(this)}>{this.state.message}</button>;
+    }
+
     render() {
-        return <ThemeProvider theme={base}>
-            <Row style={{height: 200}}>
-                <RowItem>
-                    <button onClick={this.handleAddClick.bind(this)}>Add one more</button>
-                </RowItem>
-                {/*this.renderRowItems()*/}
-                <RowItem>
-                    <Stack>
-                        <StackItem title="a">
-                            Hello
-                        </StackItem>
-                        <StackItem title="b">
-                            world!
-                        </StackItem>
-                        <StackItem title="c" style={{display: 'flex'}}>
-                            <Row>
-                                <RowItem>
-                                    Foo
-                                </RowItem>
-                                <RowItem>
-                                    Bar
-                                </RowItem>
-                            </Row>
-                        </StackItem>
-                    </Stack>
-                </RowItem>
-            </Row>
-        </ThemeProvider>;
+        const LayoutElement = this.layoutElement;
+        return <LayoutElement theme={base} button={this.renderButton()}/>;
     }
 }
 

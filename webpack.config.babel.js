@@ -14,7 +14,7 @@ export default {
         loaders: [
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
+                include: /src/,
                 loader: 'babel'
             }, {
                 test: /\.css$/,
