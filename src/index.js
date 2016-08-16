@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {FloatyReducer, LayoutManager} from 'floaty/lib';
+import {FloatyLayout, FloatyReducer} from 'floaty/lib';
 import base from 'floaty/lib/base';
 import theme from './theme';
-import {createStore, compose} from 'redux';
+import {createStore} from 'redux';
 
 Object.keys(theme).forEach(key => {
     base[key] = classNames(base[key], theme[key]);
@@ -14,9 +14,10 @@ const layout = {
     type: 'row',
     props: {
         style: {
-            height: 200
+            height: '100%'
         }
-    }, items: [
+    },
+    items: [
         {
             type: 'prop-ref',
             name: 'button'
@@ -32,11 +33,6 @@ const layout = {
                     content: 'world!'
                 }, {
                     type: 'row',
-                    props: {
-                        style: {
-                            display: 'flex'
-                        }
-                    },
                     items: [
                         {
                             content: 'Foo'
@@ -93,7 +89,7 @@ class App extends React.Component {
     }
 
     render() {
-        return <LayoutManager store={store} theme={base} button={this.renderButton()}/>;
+        return <FloatyLayout style={{width: 400, height: 200}} store={store} theme={base} refs={{button: this.renderButton()}}/>;
     }
 }
 
