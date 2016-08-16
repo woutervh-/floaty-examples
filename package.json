@@ -24,6 +24,7 @@
   "dependencies": {
     "floaty": "file:../floaty",
     "react": "^15.3.0",
-    "react-dom": "^15.3.0"
+    "react-dom": "^15.3.0",
+    "redux": "^3.5.2"
   }
 }

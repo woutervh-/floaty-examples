@@ -1,63 +1,61 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {LayoutManager} from 'floaty/lib';
+import {FloatyReducer, LayoutManager} from 'floaty/lib';
 import base from 'floaty/lib/base';
 import theme from './theme';
+import {createStore, compose} from 'redux';
 
 Object.keys(theme).forEach(key => {
     base[key] = classNames(base[key], theme[key]);
 });
+
+const layout = {
+    type: 'row',
+    props: {
+        style: {
+            height: 200
+        }
+    }, items: [
+        {
+            type: 'prop-ref',
+            name: 'button'
+        }, {
+            type: 'stack',
+            names: [
+                'a', 'b', 'c'
+            ],
+            items: [
+                {
+                    content: 'Hello'
+                }, {
+                    content: 'world!'
+                }, {
+                    type: 'row',
+                    props: {
+                        style: {
+                            display: 'flex'
+                        }
+                    },
+                    items: [
+                        {
+                            content: 'Foo'
+                        }, {
+                            content: 'Bar'
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+};
+const store = createStore(FloatyReducer, layout, window.devToolsExtension && window.devToolsExtension());
 
 class App extends React.Component {
     state = {
         amount: 0,
         message: 'Click me'
     };
-
-    componentWillMount() {
-        this.layout = {
-            type: 'row',
-            props: {
-                style: {
-                    height: 200
-                }
-            }, items: [
-                {
-                    type: 'prop-ref',
-                    name: 'button'
-                }, {
-                    type: 'stack',
-                    items: [
-                        {
-                            title: 'a',
-                            content: 'Hello'
-                        }, {
-                            title: 'b',
-                            content: 'world!'
-                        }, {
-                            type: 'row',
-                            title: 'c',
-                            props: {
-                                style: {
-                                    display: 'flex'
-                                }
-                            },
-                            items: [
-                                {
-                                    content: 'Foo'
-                                }, {
-                                    content: 'Bar'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        };
-
-        this.layoutElement = LayoutManager(this.layout);
-    }
 
     handleAddClick() {
         this.setState({amount: this.state.amount + 1});
@@ -95,8 +93,7 @@ class App extends React.Component {
     }
 
     render() {
-        const LayoutElement = this.layoutElement;
-        return <LayoutElement theme={base} button={this.renderButton()}/>;
+        return <LayoutManager store={store} theme={base} button={this.renderButton()}/>;
     }
 }
 
