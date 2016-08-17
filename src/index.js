@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import {FloatyLayout, FloatyReducer} from 'floaty/lib';
 import base from 'floaty/lib/base';
 import theme from './theme';
-import {createStore} from 'redux';
+import createStore from 'redux/src/createStore';
 
 Object.keys(theme).forEach(key => {
     base[key] = classNames(base[key], theme[key]);
@@ -12,15 +12,18 @@ Object.keys(theme).forEach(key => {
 
 const layout = {
     type: 'row',
-    props: {
-        style: {
-            height: '100%'
-        }
-    },
     items: [
         {
-            type: 'prop-ref',
-            name: 'button'
+            type: 'stack',
+            names: [
+                'Foo'
+            ],
+            items: [
+                {
+                    type: 'prop-ref',
+                    name: 'button'
+                }
+            ]
         }, {
             type: 'stack',
             names: [
