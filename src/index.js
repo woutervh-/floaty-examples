@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {FloatyLayout, FloatyReducer} from 'floaty/lib';
+import {FloatyLayout, floatyReducer} from 'floaty/lib';
 import base from 'floaty/lib/base';
 import theme from './theme';
 import createStore from 'redux/src/createStore';
@@ -48,7 +48,7 @@ const layout = {
         }
     ]
 };
-const store = createStore(FloatyReducer, layout, window.devToolsExtension && window.devToolsExtension());
+const store = createStore(floatyReducer, layout, window.devToolsExtension && window.devToolsExtension());
 
 class App extends React.Component {
     state = {
