@@ -56,6 +56,14 @@ class App extends React.Component {
         message: 'Click me'
     };
 
+    componentWillMount() {
+        this.subscription = store.subscribe(this.forceUpdate);
+    }
+
+    componentWillUnmount() {
+        store.unsubscribe(this.subscription);
+    }
+
     handleAddClick() {
         this.setState({amount: this.state.amount + 1});
     }
@@ -92,7 +100,7 @@ class App extends React.Component {
     }
 
     render() {
-        return <FloatyLayout style={{width: 400, height: 200}} store={store} theme={base} refs={{button: this.renderButton()}}/>;
+        return <FloatyLayout style={{width: 400, height: 200}} dispatch={store.dispatch} layout={store.getState()} theme={base} refs={{button: this.renderButton()}}/>;
     }
 }
 
