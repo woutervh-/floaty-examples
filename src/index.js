@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {FloatyLayout, floatyReducer} from 'floaty/lib';
+import {Floaty, floatyReducer} from 'floaty/lib';
 import base from 'floaty/lib/base';
 import theme from './theme';
 import createStore from 'redux/src/createStore';
@@ -56,6 +56,14 @@ class App extends React.Component {
         message: 'Click me'
     };
 
+    componentWillMount() {
+        this.subscription = store.subscribe(this.forceUpdate.bind(this));
+    }
+
+    componentWillUnmount() {
+        store.unsubscribe(this.subscription);
+    }
+
     handleAddClick() {
         this.setState({amount: this.state.amount + 1});
     }
@@ -92,7 +100,7 @@ class App extends React.Component {
     }
 
     render() {
-        return <FloatyLayout style={{width: 400, height: 200}} store={store} theme={base} refs={{button: this.renderButton()}}/>;
+        return <Floaty style={{width: 400, height: 200}} dispatch={store.dispatch} layout={store.getState()} theme={base} refs={{button: this.renderButton()}}/>;
     }
 }
 
