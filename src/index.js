@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import {Floaty, floatyReducer} from 'floaty/lib';
+import {removeActiveTab} from 'floaty/lib/actions';
 import base from 'floaty/lib/base';
 import theme from './theme';
 import createStore from 'redux/src/createStore';
@@ -15,34 +16,17 @@ const layout = {
     items: [
         {
             type: 'stack',
-            names: [
-                'Foo'
-            ],
-            items: [
-                {
-                    type: 'prop-ref',
-                    name: 'button'
-                }
-            ]
+            titles: ['Foo'],
+            items: [{type: 'prop-ref', name: 'button'}]
         }, {
             type: 'stack',
-            names: [
-                'a', 'b', 'c'
-            ],
+            titles: ['a', 'b', 'c'],
             items: [
+                'Hello',
+                'world!',
                 {
-                    content: 'Hello'
-                }, {
-                    content: 'world!'
-                }, {
                     type: 'row',
-                    items: [
-                        {
-                            content: 'Foo'
-                        }, {
-                            content: 'Bar'
-                        }
-                    ]
+                    items: ['Foo', 'Bar']
                 }
             ]
         }
@@ -100,7 +84,16 @@ class App extends React.Component {
     }
 
     render() {
-        return <Floaty style={{width: 400, height: 200}} dispatch={store.dispatch} layout={store.getState()} theme={base} refs={{button: this.renderButton()}}/>;
+        return <Floaty
+            style={{width: 400, height: 200}}
+            dispatch={store.dispatch}
+            layout={store.getState()}
+            theme={base}
+            refs={{button: this.renderButton()}}
+            stackControls={[
+                dispatch => <button onClick={() => dispatch(removeActiveTab())}>Close</button>
+            ]}
+        />;
     }
 }
 
