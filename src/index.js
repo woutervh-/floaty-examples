@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {FloatyLayout, floatyReducer} from 'floaty/lib';
+import {Floaty, floatyReducer} from 'floaty';
+import Provider from 'react-redux/lib/components/Provider';
 import base from 'floaty/lib/base';
 import theme from './theme';
 import createStore from 'redux/src/createStore';
@@ -10,45 +11,27 @@ Object.keys(theme).forEach(key => {
     base[key] = classNames(base[key], theme[key]);
 });
 
-const layout = {
-    type: 'row',
-    items: [
-        {
-            type: 'stack',
-            names: [
-                'Foo'
-            ],
-            items: [
-                {
-                    type: 'prop-ref',
-                    name: 'button'
-                }
-            ]
-        }, {
-            type: 'stack',
-            names: [
-                'a', 'b', 'c'
-            ],
-            items: [
-                {
-                    content: 'Hello'
-                }, {
-                    content: 'world!'
-                }, {
-                    type: 'row',
-                    items: [
-                        {
-                            content: 'Foo'
-                        }, {
-                            content: 'Bar'
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+const initialState = {
+    entities: {
+        floatyRows: [
+            {items: [1, 2]},
+            {items: ['Foo', 'Bar']}
+        ],
+        floatyItems: [
+            {type: 'row', row: 0},
+            {type: 'stack', stack: 0},
+            {type: 'stack', stack: 1},
+            {type: 'prop-ref', name: 'button'},
+            {type: 'row', row: 1}
+        ],
+        floatyStacks: [
+            {titles: ['Foo'], items: [3]},
+            {titles: ['a', 'b', 'c'], items: ['Hello', 'World', 4]}
+        ]
+    }
 };
-const store = createStore(floatyReducer, layout, window.devToolsExtension && window.devToolsExtension());
+
+const store = createStore(floatyReducer, initialState, window.devToolsExtension && window.devToolsExtension());
 
 class App extends React.Component {
     state = {
@@ -100,7 +83,9 @@ class App extends React.Component {
     }
 
     render() {
-        return <FloatyLayout style={{width: 400, height: 200}} dispatch={store.dispatch} layout={store.getState()} theme={base} refs={{button: this.renderButton()}}/>;
+        return <Provider store={store}>
+            <Floaty style={{width: 400, height: 200}} id={0} theme={base} refs={{button: this.renderButton()}}/>
+        </Provider>;
     }
 }
 

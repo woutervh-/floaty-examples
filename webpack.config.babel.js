@@ -2,6 +2,7 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
+    devtool: 'eval-source-map',
     entry: path.resolve(__dirname, 'src', 'index.js'),
     output: {
         path: 'dist',
