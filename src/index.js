@@ -13,21 +13,16 @@ Object.keys(theme).forEach(key => {
 
 const initialState = {
     entities: {
-        floatyRows: [
-            {items: [1, 2]},
-            {items: ['Foo', 'Bar']}
-        ],
-        floatyItems: [
-            {type: 'row', row: 0},
-            {type: 'stack', stack: 0},
-            {type: 'stack', stack: 1},
-            {type: 'prop-ref', name: 'button'},
-            {type: 'row', row: 1}
-        ],
-        floatyStacks: [
-            {titles: ['Foo'], items: [3]},
-            {titles: ['a', 'b', 'c'], items: ['Hello', 'World', 4]}
-        ]
+        floatyItems: {
+            0: {type: 'row', items: [1, 2]},
+            1: {type: 'stack', titles: ['Foo'], items: [3]},
+            2: {type: 'stack', titles: ['a', 'b', 'c'], items: ['Hello', 'World', 4]},
+            3: {type: 'prop-ref', name: 'button'},
+            4: {type: 'row', items: ['Foo', 'Bar']}
+        },
+        floatyLayouts: {
+            0: {item: 0}
+        }
     }
 };
 
@@ -40,7 +35,7 @@ class App extends React.Component {
     };
 
     componentWillMount() {
-        this.subscription = store.subscribe(this.forceUpdate);
+        this.subscription = store.subscribe(this.forceUpdate.bind(this));
     }
 
     componentWillUnmount() {
@@ -84,7 +79,7 @@ class App extends React.Component {
 
     render() {
         return <Provider store={store}>
-            <Floaty style={{width: 400, height: 200}} id={0} theme={base} refs={{button: this.renderButton()}}/>
+            <Floaty ref={r => this.floaty = r} style={{width: 400, height: 200}} id={0} theme={base} refs={{button: this.renderButton()}}/>
         </Provider>;
     }
 }
