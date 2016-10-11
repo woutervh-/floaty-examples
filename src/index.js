@@ -6,6 +6,7 @@ import Provider from 'react-redux/lib/components/Provider';
 import base from 'floaty/lib/base';
 import theme from './theme';
 import createStore from 'redux/src/createStore';
+import combineReducers from 'redux/src/combineReducers';
 
 Object.keys(theme).forEach(key => {
     base[key] = classNames(base[key], theme[key]);
@@ -13,20 +14,25 @@ Object.keys(theme).forEach(key => {
 
 const initialState = {
     entities: {
-        floatyItems: {
-            0: {type: 'row', items: [1, 2]},
-            1: {type: 'stack', titles: ['Foo'], items: [3]},
-            2: {type: 'stack', titles: ['a', 'b', 'c'], items: ['Hello', 'World', 4]},
-            3: {type: 'prop-ref', name: 'button'},
-            4: {type: 'row', items: ['Foo', 'Bar']}
-        },
-        floatyLayouts: {
-            0: {item: 0}
+        floaty: {
+            items: {
+                0: {type: 'row', items: [1, 2]},
+                1: {type: 'stack', titles: ['Foo'], items: [3]},
+                2: {type: 'stack', titles: ['a', 'b', 'c'], items: ['Hello', 'World', 4]},
+                3: {type: 'prop-ref', name: 'button'},
+                4: {type: 'row', items: ['Foo', 'Bar']}
+            },
+            layouts: {
+                0: {item: 0}
+            }
         }
     }
 };
 
-const store = createStore(floatyReducer, initialState, window.devToolsExtension && window.devToolsExtension());
+const entities = combineReducers({floaty: floatyReducer});
+const myReducer = combineReducers({entities});
+
+const store = createStore(myReducer, initialState, window.devToolsExtension && window.devToolsExtension());
 
 class App extends React.Component {
     state = {
@@ -79,7 +85,13 @@ class App extends React.Component {
 
     render() {
         return <Provider store={store}>
-            <Floaty ref={r => this.floaty = r} style={{width: 400, height: 200}} id={0} theme={base} refs={{button: this.renderButton()}}/>
+            <Floaty
+                ref={r => this.floaty = r}
+                style={{width: 400, height: 200}}
+                id={0}
+                theme={base}
+                refs={{button: this.renderButton()}}
+            />
         </Provider>;
     }
 }
