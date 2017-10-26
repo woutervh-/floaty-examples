@@ -22,7 +22,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "floaty": "^0.3.4",
+    "floaty": "^0.3.7",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-redux": "^4.4.5",
