@@ -13,24 +13,28 @@ Object.keys(theme).forEach(key => {
 });
 
 const initialState = {
-    entities: {
-        floaty: {
-            items: {
-                0: {type: 'row', items: [1, 2]},
-                1: {type: 'stack', titles: ['Foo'], items: [3]},
-                2: {type: 'stack', titles: ['a', 'b', 'c'], items: ['Hello', 'World', 4]},
-                3: {type: 'prop-ref', name: 'button'},
-                4: {type: 'row', items: ['Foo', 'Bar']}
-            },
-            layouts: {
-                0: {item: 0}
-            }
+    floaty: {
+        items: {
+            '0': {type: 'row', items: ['1', '2']},
+            '1': {type: 'stack', titles: ['Foo'], items: ['3']},
+            '2': {type: 'stack', titles: ['a', 'b', 'c'], items: ['Hello', 'World', '4']},
+            '3': {type: 'prop-ref', name: 'button'},
+            '4': {type: 'row', items: ['Foo', 'Bar']},
+            'a': {type: 'text', content: 'a'},
+            'b': {type: 'text', content: 'b'},
+            'c': {type: 'text', content: 'c'},
+            'Hello': {type: 'text', content: 'Hello'},
+            'World': {type: 'text', content: 'World'},
+            'Foo': {type: 'text', content: 'Foo'},
+            'Bar': {type: 'text', content: 'Bar'}
+        },
+        layouts: {
+            '0': {item: '0'}
         }
     }
 };
 
-const entities = combineReducers({floaty: floatyReducer});
-const myReducer = combineReducers({entities});
+const myReducer = combineReducers({floaty: floatyReducer});
 
 const store = createStore(myReducer, initialState, window.devToolsExtension && window.devToolsExtension());
 
