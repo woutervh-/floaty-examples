@@ -4,27 +4,28 @@
   "description": "Example uses of floaty",
   "main": "lib/index.js",
   "scripts": {
-    "start:dev": "webpack-dev-server --config webpack.config.babel.js --content-base dist/ --hot --inline",
+    "start:dev": "webpack-dev-server --config webpack.config.js --content-base dist/ --hot --inline",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Wouter van Heeswijk",
   "license": "MIT",
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-1": "^6.5.0",
     "classnames": "^2.2.5",
-    "css-loader": "^0.23.1",
+    "css-loader": "^0.28.7",
     "html-webpack-plugin": "^2.22.0",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "style-loader": "^0.19.1",
+    "webpack": "^2.0.0",
+    "webpack-dev-server": "^2.0.0"
   },
   "dependencies": {
-    "floaty": "^0.3.7",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
+    "floaty": "^0.3.19",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2"
   }
